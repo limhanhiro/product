@@ -7,4 +7,11 @@
   <select id="getProductListPostgre" parameterType="STRING" resultType="PostProduct">
     SELECT * FROM connection_test
   </select>
+
+  <insert id="insertProductPostgre">
+    INSERT INTO connection_test (name, price) VALUES ('asdf', 1234)
+  </insert>
+  <insert id="errorProductPostgre">
+    INSERT INTO connection_test (NAME, PRICE) VALUES ('asdf', 'aaaaaaaaaaaaaaa')
+  </insert>
 </mapper>

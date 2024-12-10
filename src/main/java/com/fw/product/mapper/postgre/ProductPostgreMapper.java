@@ -9,6 +9,10 @@ public interface ProductPostgreMapper {
 
     List<PostProduct> getProductListPostgre(String param);
 
+    void insertProductPostgre();
+
+    void errorProductPostgre();
+
 
     
 }

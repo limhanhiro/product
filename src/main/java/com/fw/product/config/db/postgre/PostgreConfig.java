@@ -40,27 +40,7 @@ public class PostgreConfig {
     @ConfigurationProperties(prefix = "spring.datasource.postgre")
     public DataSource postgreDataSource() {
         
-        // 설정값 직접 확인
-        System.out.println("JDBC URL: " + environment.getProperty("spring.datasource.postgre.url"));
-        System.out.println("Username: " + environment.getProperty("spring.datasource.postgre.username"));
-        System.out.println("Driver: " + environment.getProperty("spring.datasource.postgre.driver-class-name"));
-
-        // return DataSourceBuilder.create().type(HikariDataSource.class).build();
-        HikariDataSource dataSource = DataSourceBuilder.create().type(HikariDataSource.class).build();
-
-        // 설정값 직접 확인
-        System.out.println("=== HikariCP Configuration for postgreDataSource ===");
-        System.out.println("JDBC URL: " + dataSource.getJdbcUrl());
-        System.out.println("Username: " + dataSource.getUsername());
-        System.out.println("Driver Class Name: " + dataSource.getDriverClassName());
-        System.out.println("Maximum Pool Size: " + dataSource.getMaximumPoolSize());
-        System.out.println("Minimum Idle Connections: " + dataSource.getMinimumIdle());
-        System.out.println("Idle Timeout: " + dataSource.getIdleTimeout());
-        System.out.println("Connection Timeout: " + dataSource.getConnectionTimeout());
-        System.out.println("Max Lifetime: " + dataSource.getMaxLifetime());
-        System.out.println("===============================================");
-
-        return dataSource;
+        return DataSourceBuilder.create().type(HikariDataSource.class).build();
 
     }
 

@@ -34,6 +34,29 @@ public class ProductController {
         List<PostProduct> productList = productService.getProductListPostgre(param);
         return productList.toString();
     }
+
+    @GetMapping("/product/mysql/tran")
+    public boolean insertMysqlDate(@RequestParam(required = false) String param) {
+
+        try {
+            productService.insertProductMysql();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @GetMapping("/product/postgre/tran")
+    public boolean insertPostgreDate(@RequestParam(required = false) String param) {
+        
+        try {
+            productService.insertProductPostgre();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    
+    }
     
     
 }

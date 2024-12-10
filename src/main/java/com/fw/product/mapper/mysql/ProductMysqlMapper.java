@@ -9,6 +9,10 @@ public interface ProductMysqlMapper {
 
     List<MyProduct> getProductListMysql(String param);
 
+    void insertProductMysql();
+
+    void errorProductMysql();
+
 
     
 }

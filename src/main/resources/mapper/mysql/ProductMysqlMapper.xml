@@ -7,4 +7,10 @@
   <select id="getProductListMysql" parameterType="STRING" resultType="MyProduct">
     SELECT * FROM CONNECTION_TEST
   </select>
+  <insert id="insertProductMysql" parameterType="MyProduct">
+    INSERT INTO CONNECTION_TEST (NAME, PRICE) VALUES ('asdf', 1234)
+  </insert>
+  <insert id="errorProductMysql" parameterType="MyProduct">
+    INSERT INTO CONNECTION_TEST (NAME, PRICE) VALUES ('asdf', 'aaaaaaaaaaaaaaa')
+  </insert>
 </mapper>
