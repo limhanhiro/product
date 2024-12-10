@@ -35,6 +35,13 @@ public class PostgreConfig {
 
     private final Environment environment;
 
+     /**
+     * PostgreSQL용 DataSource 생성
+     * - `@Primary`를 붙여 기본 데이터 소스로 사용 설정
+     * - `@ConfigurationProperties`로 application.yml/properties의 설정을 매핑
+     * - DataSourceBuilder를 사용하여 HikariCP DataSource 생성
+     * - javaConfig 로 설정할 경우 properties 에 url 이 아닌 jdbc-url 로 명시 해줘야함
+     */
     @Primary
     @Bean(name = "postgreDataSource")
     @ConfigurationProperties(prefix = "spring.datasource.postgre")
@@ -43,9 +50,12 @@ public class PostgreConfig {
         return DataSourceBuilder.create().type(HikariDataSource.class).build();
 
     }
-
-    /**
-     * EntityManagerFactory 설정 (PostgreSQL).
+     /**
+     * JPA를 위한 EntityManagerFactory 설정
+     * - `@Primary`로 기본 설정 지정
+     * - Hibernate 속성(ddl-auto, dialect, show_sql) 적용
+     * - EntityManagerFactoryBuilder로 JPA 구성
+     * - PostgreSQL 설정에 맞춰 persistenceUnit과 모델 패키지 설정
      */
     @Primary
     @Bean(name = "postgreEntityManagerFactory")
@@ -77,13 +87,25 @@ public class PostgreConfig {
                 .properties(jpaProperties)
                 .build();
     }
+
+    
+    /**
+     * PostgreSQL용 TransactionManager 설정
+     */
     @Primary
     @Bean(name = "postgreTransactionManager")
     public PlatformTransactionManager postgreTransactionManager(
             @Qualifier("postgreEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
     }
-    
+
+
+    /**
+     * MyBatis용 SqlSessionFactory 설정
+     * - MyBatis 매퍼 XML과 DataSource 연결
+     * - MapperLocations: mapper/postgre 디렉토리의 XML 파일들
+     * - TypeAliasesPackage: MyBatis에서 엔티티 이름을 간단히 사용하도록 설정
+     */
     @Primary
     @Bean(name = "postgreSqlSessionFactory")
     public SqlSessionFactory postgreSqlSessionFactory(@Qualifier("postgreDataSource") DataSource postgreDataSource,
